@@ -1,7 +1,7 @@
 # generate_video.py
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation, PillowWriter
+from matplotlib.animation import FuncAnimation, FFMpegWriter
 from sud62_module import SUD6_2_Verified
 
 # SUD6.2シミュレーション
@@ -32,6 +32,7 @@ def update(frame):
 
 anim = FuncAnimation(fig, update, frames=len(mean_r), init_func=init, blit=True, interval=50)
 
-# iPhoneでも簡単にGIF出力
-anim.save("sud62_phi_convergence.gif", writer=PillowWriter(fps=20))
-print("🎬 GIF生成完了: sud62_phi_convergence.gif")
+# MP4 保存
+writer = FFMpegWriter(fps=20, metadata=dict(artist='Suzuki SUD6.2'), bitrate=1800)
+anim.save("sud62_phi_convergence.mp4", writer=writer)
+print("🎬 動画生成完了: sud62_phi_convergence.mp4")
